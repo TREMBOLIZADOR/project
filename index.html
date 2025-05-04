@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>teste</title>
+    <title>Substituir PDF</title>
 </head>
 <body>
-    <a href="pdf.pdf" target="_blank">Baixe seu PDF Aqui!</a>
+    <h2>Faça o upload de um novo PDF para substituir o anterior</h2>
+    <form id="upload-form">
+        <label for="file">Escolha um arquivo PDF:</label>
+        <input type="file" id="file" accept=".pdf" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        // Evento de envio do formulário
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Impede o envio tradicional do formulário
+
+            // Obtém o arquivo selecionado
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
+
+            // Verifica se foi selecionado um arquivo
+            if (file && file.type === 'application/pdf') {
+                // Cria um objeto de URL para o arquivo
+                const url = URL.createObjectURL(file);
+
+                // Cria um link temporário para download
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'pdf.pdf';  // Nome do arquivo será pdf.pdf, substituindo o anterior
+                link.click();  // Aciona o download do arquivo
+            } else {
+                alert('Por favor, selecione um arquivo PDF.');
+            }
+        });
+    </script>
 </body>
 </html>
